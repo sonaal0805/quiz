@@ -4,18 +4,27 @@ import Option from './Option'
 export default function Questions(props) {
 
     let [selected, setSelected] = React.useState([false, false, false, false])
-    let [showAnswer, showAnswerControl] = React.useState(props.showAnswer)
+    // let [showAnswer, showAnswerControl] = React.useState(props.showAnswer)
 
     let options = props.options
     
-    console.log('options: ', options)
+    // console.log('options: ', options)
 
-    function optionClicked(index){
-        console.log(`option ${index} clicked`)
+    function optionClicked(optionNum,data){
+        console.log(`option ${optionNum} clicked`)
+        console.log("options selected is: ",data)
+        console.log("selection status is: ",!selected[optionNum])
+        let questNum = props.id
+
+        if (!selected[optionNum] ){
+            props.answersGiven(questNum,optionNum,data)
+        }
+       
+
         setSelected(oldSelected =>{
             let newSelected = []
             for (let i = 0;i<oldSelected.length;i++){
-              if (i === index){
+              if (i === optionNum){
                   newSelected.push(!oldSelected[i])
               }else{
                 newSelected.push(false)
@@ -25,7 +34,7 @@ export default function Questions(props) {
             return(newSelected)    
 
         })
-        console.log(selected)
+        // console.log(selected)
         
     }
 
@@ -43,6 +52,7 @@ export default function Questions(props) {
                 correctAnswer = {props.correct_answer}
                 showAnswer = {props.showAnswer}
                 addScore = {props.addScore}
+                // answersGiven = {props.answersGiven}
            />   
  
         
